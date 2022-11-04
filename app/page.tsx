@@ -1,7 +1,15 @@
 import React from 'react';
 import data from './data.json';
 
-const days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
+const days = [
+  'monday',
+  'tuesday',
+  'wednesday',
+  'thursday',
+  'friday',
+  'saturday',
+  'sunday',
+];
 const slots = [
   '0030 - 0330',
   '0330 - 0630',
@@ -13,7 +21,12 @@ const slots = [
   '2130 - 0030',
 ];
 
-const isBlackedOut = (level: number, location: string, day: string, slot: number) => {
+const isBlackedOut = (
+  level: number,
+  location: string,
+  day: string,
+  slot: number
+) => {
   const slotData = data.ood[day];
   const levelData = slotData.slice(0, level).map((x: string) => x[slot]);
 
@@ -21,35 +34,38 @@ const isBlackedOut = (level: number, location: string, day: string, slot: number
 };
 
 const page: React.FC = () => {
-
   const level = 8;
   const location = 'A';
 
-  return <div style={styles.container}>
-    <div></div>
-    {slots.map(slot => <div key={slot} style={styles.slot}>{slot}</div>)}
-    {days.map(day => {
-        return <React.Fragment key={day}>
-          <div style={styles.day}>{day}</div>
-          {slots.map((slot, index) => {
-            const blacked = isBlackedOut(
-              level,
-              location,
-              day,
-              index);
-            return <div key={slot}
-              style={{
-                ...styles.slot, ...(
-                  blacked ? styles.blacked : styles.notblacked
-                ),
-              }}
-            ></div>;
-          })}
-        </React.Fragment>;
-      },
-    )
-    }
-  </div>;
+  return (
+    <div style={styles.container}>
+      <div></div>
+      {slots.map((slot) => (
+        <div key={slot} style={styles.slot}>
+          {slot}
+        </div>
+      ))}
+      {days.map((day) => {
+        return (
+          <React.Fragment key={day}>
+            <div style={styles.day}>{day}</div>
+            {slots.map((slot, index) => {
+              const blacked = isBlackedOut(level, location, day, index);
+              return (
+                <div
+                  key={slot}
+                  style={{
+                    ...styles.slot,
+                    ...(blacked ? styles.blacked : styles.notblacked),
+                  }}
+                ></div>
+              );
+            })}
+          </React.Fragment>
+        );
+      })}
+    </div>
+  );
 };
 const styles = {
   container: {
@@ -60,10 +76,9 @@ const styles = {
     height: '40vh',
     width: '50vw',
     placeItems: 'center',
-
   },
   day: {
-    textTransform: 'capitalize'
+    textTransform: 'capitalize',
   },
   slot: {},
   blacked: {
@@ -76,7 +91,6 @@ const styles = {
     height: '100%',
     width: '100%',
   },
-
 };
 
 export default page;
