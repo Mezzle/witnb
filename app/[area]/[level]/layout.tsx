@@ -1,13 +1,13 @@
 export default function Layout({
   children,
-  params: {location},
+  params: { level },
 }: {
   children: React.ReactNode;
-  params: { location: string };
+  params: { level: number };
 }) {
   return (
     <>
-      <h2>Area {location.toUpperCase()}</h2>
+      <h3>Level {level}</h3>
       {children}
     </>
   );
