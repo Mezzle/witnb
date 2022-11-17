@@ -22,13 +22,17 @@ const slots = [
   '2130 - 0030',
 ];
 
+interface Data  {
+  ood: Record<string, string[]>
+}
+
 const isBlackedOut = (
   level: number,
   location: string,
   day: string,
   slot: number,
 ) => {
-  const slotData = data.ood[day];
+  const slotData = (data as Data).ood[day];
   const levelData = slotData.slice(0, level).map((x: string) => x[slot]);
 
   return levelData.includes(location);
