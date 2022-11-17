@@ -1,4 +1,5 @@
 import React from 'react';
+import '../styles/global.css';
 import data from './data.json';
 
 const days = [
@@ -25,7 +26,7 @@ const isBlackedOut = (
   level: number,
   location: string,
   day: string,
-  slot: number
+  slot: number,
 ) => {
   const slotData = data.ood[day];
   const levelData = slotData.slice(0, level).map((x: string) => x[slot]);
@@ -34,63 +35,40 @@ const isBlackedOut = (
 };
 
 const page: React.FC = () => {
-  const level = 8;
+  const level = 10;
   const location = 'A';
 
   return (
-    <div style={styles.container}>
-      <div></div>
-      {slots.map((slot) => (
-        <div key={slot} style={styles.slot}>
-          {slot}
-        </div>
-      ))}
-      {days.map((day) => {
-        return (
-          <React.Fragment key={day}>
-            <div style={styles.day}>{day}</div>
-            {slots.map((slot, index) => {
-              const blacked = isBlackedOut(level, location, day, index);
-              return (
-                <div
-                  key={slot}
-                  style={{
-                    ...styles.slot,
-                    ...(blacked ? styles.blacked : styles.notblacked),
-                  }}
-                ></div>
-              );
-            })}
-          </React.Fragment>
-        );
-      })}
+    <div className="container m-4">
+      <h1 className="text-3xl font-bold m-2 mb-8">When is the next blackout? (Area {location}, Level {level})</h1>
+      <div className="grid grid-rows-blackout grid-cols-blackout gap-1 place-items-center min-w-fit max-w-screen-xl">
+        <div></div>
+        {slots.map((slot) => (
+          <div key={slot}>
+            {slot}
+          </div>
+        ))}
+        {days.map((day) => {
+          return (
+            <React.Fragment key={day}>
+              <div className="capitalize">{day}</div>
+              {slots.map((slot, index) => {
+                const blacked = isBlackedOut(level, location, day, index);
+                return (
+                  <div
+                    key={slot}
+                    className={(
+                      blacked ? 'bg-error' : 'bg-base-200'
+                    ) + ' h-12 w-12 rounded-full shadow-inner'}
+                  ></div>
+                );
+              })}
+            </React.Fragment>
+          );
+        })}
+      </div>
     </div>
   );
-};
-const styles = {
-  container: {
-    display: 'grid',
-    gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr',
-    gridTemplateRows: '1fr 3fr 3fr 3fr 3fr 3fr 3fr 3fr',
-    gap: '3px',
-    height: '40vh',
-    width: '50vw',
-    placeItems: 'center',
-  },
-  day: {
-    textTransform: 'capitalize',
-  },
-  slot: {},
-  blacked: {
-    backgroundColor: 'pink',
-    height: '100%',
-    width: '100%',
-  },
-  notblacked: {
-    backgroundColor: 'lightgreen',
-    height: '100%',
-    width: '100%',
-  },
 };
 
 export default page;
