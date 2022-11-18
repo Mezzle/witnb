@@ -9,15 +9,21 @@ const Page: React.FC<Props> = ({ params: { area } }) => {
   }
 
   return (
-    <ul>
-      {levels.map((level) => (
-        <li>
-          <Link key={level} href={`/${area}/${level}`}>
-            Level {level}
-          </Link>
-        </li>
-      ))}
-    </ul>
+    <div className="dropdown">
+      <label tabIndex={0} className="btn m-1">
+        Select Level
+      </label>
+      <ul
+        tabIndex={0}
+        className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52"
+      >
+        {levels.map((level) => (
+          <li>
+            <Link href={`/${area}/${level}`}>Level {level}</Link>
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 };
 
