@@ -51,7 +51,7 @@ const page: React.FC<{ params: { level: string; area: string } }> = ({
   }
 
   return (
-    <div className="grid grid-rows-blackout grid-cols-blackout gap-1 place-items-center min-w-fit max-w-screen-xl">
+    <div className="grid grid-rows-blackout-sm lg:grid-rows-blackout grid-cols-blackout-sm lg:grid-cols-blackout gap-1 place-items-center min-w-fit max-w-screen-xl overflow-x-auto">
       <div></div>
       {slots.map((slot) => (
         <div key={slot}>{slot}</div>
